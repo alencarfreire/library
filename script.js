@@ -87,6 +87,7 @@ function displayBook() {
     <p>Title: ${title}</p>
     <p>Author: ${author}</p>
     <p>Pages: ${pages}</p>
+    <p>Read? ${readRadios[0].checked ? "yes" : "no"}<p>
     </div>
     `;
   }
