@@ -57,6 +57,20 @@ label {
   flex-wrap: wrap;
 }
 
+.head {
+  display: flex;
+  justify-content: space-between;
+  align-items: center;
+}
+
+.delete-book {
+  width: 30px;
+  height: 30px;
+}
+
+.changeRead {
+  cursor: pointer;
+}
 
 .this-book {
   border: 1px solid;
