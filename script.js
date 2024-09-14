@@ -1,7 +1,6 @@
-// biblioteca de livros
+// dados
 const myLibrary = [];
 
-// construtor do objeto livro
 class Book {
   constructor(title, author, pages, read) {
     this.title = title;
@@ -9,7 +8,7 @@ class Book {
     this.pages = pages;
     this.read = read;
   }
-  // info para debugar
+
   info() {
     return `${this.title} by ${this.author}, ${this.pages} pages, ${
       this.read ? "read" : "not read yet"
@@ -17,22 +16,18 @@ class Book {
   }
 }
 
-// selecionando elementos html
-const newBook = document.querySelector("#new-book");
+const addBook = document.getElementById("addBook");
+const addNewBook = document.querySelector("#new-book");
 const dialog = document.querySelector("#new-book-dialog");
-const addBook = document.querySelector("#addBook");
 const close = document.querySelector(".close");
 const allBooks = document.querySelector(".all-books");
 
-//função para adicionar os novos livros a array myLibrary
 function addBookToLibrary() {
-  // selecionando os valores do form do dialog
   const title = document.querySelector("#title").value;
   const author = document.querySelector("#author").value;
   const pages = document.querySelector("#pages").value;
   const readRadios = document.getElementsByName("read");
 
-  // se nao digitar nda, retornar false
   if (
     title === "" ||
     author === "" ||
@@ -41,49 +36,50 @@ function addBookToLibrary() {
   )
     return false;
 
-  // se marcar o [0] que é o yes, retornar true(checked)
   const read = readRadios[0].checked;
-  // criar o novo book
   const book = new Book(title, author, pages, read);
-  // adicionar o novo book na array myLibrary
   myLibrary.push(book);
 
-  displayBooks(book);
+  displayBook(book);
+  clearForm();
+  openDialog();
 }
 
-// criar o evento para capturar o clique ao botão e retornar a função addBookToLibrary
-addBook.addEventListener("click", addBookToLibrary);
-
-// função para adicionar ou retirar o atributo 'open' do dialog
-function openDialog() {
-  dialog.toggleAttribute("open");
+function clearForm() {
+  document.querySelector("#title").value = "";
+  document.querySelector("#author").value = "";
+  document.querySelector("#pages").value = "";
+  document.getElementsByName("read")[0].checked = false;
+  document.getElementsByName("read")[1].checked = false;
 }
-// ao clicar no botão 'new book' abre o dialog
-newBook.addEventListener("click", openDialog);
 
-function displayBooks(book) {
-  let newItem = document.createElement("div");
+function displayBook(book) {
+  const newItem = document.createElement("div");
   newItem.innerHTML = `
     <p>Livro - ${myLibrary.length}</p>
     <div class="this-book">
-      <div class="data-book">
-        <p>Title: ${book.title}</p>
-        <p>Author: ${book.author}</p>
-        <p>Pages: ${book.pages}</p>
-        <p>Read? ${book.title ? "yes" : "no"}</p>
-      </div>
+      <p>Title: ${book.title}</p>
+      <p>Author: ${book.author}</p>
+      <p>Pages: ${book.pages}</p>
+      <p>Read? ${book.read ? "yes" : "no"}</p>
     </div>
   `;
   allBooks.appendChild(newItem);
 }
 
+function openDialog() {
+  dialog.toggleAttribute("open");
+}
 
+addBook.addEventListener("click", addBookToLibrary);
+addNewBook.addEventListener("click", openDialog);
+close.addEventListener("click", openDialog);
 
-// debugging
+// Para debugging
 function displayBookLogs() {
   myLibrary.forEach((book) => {
     console.log(book.info());
   });
 }
-// add o novo livro ao console.log
+
 addBook.addEventListener("click", displayBookLogs);
