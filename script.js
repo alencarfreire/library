@@ -80,9 +80,9 @@ close.addEventListener("click", () => {
 function displayBook() {
   let newItem = document.createElement("div");
 
-  for (let i = 0; i < myLibrary.length; i++) {
+  for (let i = 0; i <= myLibrary.length; i++) {
     newItem.innerHTML = `
-    <p>Livro - ${myLibrary.length}</p>
+    <p>Livro - ${myLibrary.length + 1}</p>
     <div class="this-book">
     <p>Title: ${title}</p>
     <p>Author: ${author}</p>
