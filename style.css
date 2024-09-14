@@ -1,0 +1,64 @@
+
+html {
+  font-family: 'Courier New', Courier, monospace;
+}
+
+body {
+  width: 100vw;
+  height: 90vh;
+  display: flex;
+  justify-content: center;
+  align-items: center;
+}
+
+main {
+  display: flex;
+  flex-direction: column;
+  justify-content: center;
+  align-items: center;
+}
+
+dialog {
+  padding: 60px;
+}
+
+.close {
+  position: relative;
+  top: -45px;
+  left: 185px;
+}
+
+form {
+  display: flex;
+  flex-direction: column;
+  justify-content: center;
+  gap: 12px;
+}
+
+label {
+  display: flex;
+  flex-direction: column;
+  align-items: start;
+  gap: 4px;
+}
+
+.radio {
+  flex-direction: row;
+  padding-top: 8px;
+}
+
+.all-books {
+  display: flex;
+  gap: 16px;
+  padding-top: 24px;
+  align-items: center;
+  justify-content: center;
+  max-width: 600px;
+  flex-wrap: wrap;
+}
+
+
+.this-book {
+  border: 1px solid;
+  padding: 0 16px;
+}
