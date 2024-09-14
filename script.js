@@ -1,8 +1,7 @@
-// dados
-
+// biblioteca de livros
 const myLibrary = [];
-let i = 0;
 
+// construtor do objeto livro
 class Book {
   constructor(title, author, pages, read) {
     this.title = title;
@@ -10,24 +9,30 @@ class Book {
     this.pages = pages;
     this.read = read;
   }
-
+  // info para debugar
   info() {
-    return `${this.title} by ${this.author}, ${this.pages} pages, ${this.read}`;
+    return `${this.title} by ${this.author}, ${this.pages} pages, ${
+      this.read ? "read" : "not read yet"
+    }`;
   }
 }
 
-const theHobbit = new Book("The Hobbit", "J.R.R. Tolkien", 295, "not read yet");
-console.log(theHobbit.info()); // "The Hobbit by J.R.R. Tolkien, 295 pages, not read yet"
+// selecionando elementos html
+const newBook = document.querySelector("#new-book");
+const dialog = document.querySelector("#new-book-dialog");
+const addBook = document.querySelector("#addBook");
+const close = document.querySelector(".close");
+const allBooks = document.querySelector(".all-books");
 
-let addBook = document.getElementById("addBook");
-let title = document.querySelector("#title").value;
-let author = document.querySelector("#author").value;
-let pages = document.querySelector("#pages").value;
-let readRadios = document.getElementsByName("read");
-
+//função para adicionar os novos livros a array myLibrary
 function addBookToLibrary() {
-  let read;
+  // selecionando os valores do form do dialog
+  const title = document.querySelector("#title").value;
+  const author = document.querySelector("#author").value;
+  const pages = document.querySelector("#pages").value;
+  const readRadios = document.getElementsByName("read");
 
+  // se nao digitar nda, retornar false
   if (
     title === "" ||
     author === "" ||
@@ -36,62 +41,49 @@ function addBookToLibrary() {
   )
     return false;
 
-  if (readRadios[0].checked) {
-    read = "yes";
-  } else {
-    read = "no";
-  }
+  // se marcar o [0] que é o yes, retornar true(checked)
+  const read = readRadios[0].checked;
+  // criar o novo book
+  const book = new Book(title, author, pages, read);
+  // adicionar o novo book na array myLibrary
+  myLibrary.push(book);
 
-  let book = new Book(title, author, pages, read);
-  myLibrary[i] = book;
-  i++;
-
-  addBook.addEventListener("click", displayBookLogs);
+  displayBooks(book);
 }
 
+// criar o evento para capturar o clique ao botão e retornar a função addBookToLibrary
 addBook.addEventListener("click", addBookToLibrary);
 
-function displayBookLogs() {
-  myLibrary.forEach((book) => {
-    console.log(book);
-  });
-}
-
-console.log(myLibrary);
-
-// interface
-const addNewBook = document.querySelector("#new-book");
-const dialog = document.querySelector("#new-book-dialog");
-const close = document.querySelector(".close");
-const allBooks = document.querySelector(".all-books");
-
-console.log(addNewBook);
-console.log(dialog);
-console.log(close);
+// função para adicionar ou retirar o atributo 'open' do dialog
 function openDialog() {
   dialog.toggleAttribute("open");
 }
+// ao clicar no botão 'new book' abre o dialog
+newBook.addEventListener("click", openDialog);
 
-addNewBook.addEventListener("click", openDialog);
-close.addEventListener("click", () => {
-  dialog.toggleAttribute("open");
-});
-
-function displayBook() {
+function displayBooks(book) {
   let newItem = document.createElement("div");
-
-  for (let i = 0; i <= myLibrary.length; i++) {
-    newItem.innerHTML = `
-    <p>Livro - ${myLibrary.length + 1}</p>
+  newItem.innerHTML = `
+    <p>Livro - ${myLibrary.length}</p>
     <div class="this-book">
-    <p>Title: ${title}</p>
-    <p>Author: ${author}</p>
-    <p>Pages: ${pages}</p>
-    <p>Read? ${readRadios[0].checked ? "yes" : "no"}<p>
+      <div class="data-book">
+        <p>Title: ${book.title}</p>
+        <p>Author: ${book.author}</p>
+        <p>Pages: ${book.pages}</p>
+        <p>Read? ${book.title ? "yes" : "no"}</p>
+      </div>
     </div>
-    `;
-  }
+  `;
   allBooks.appendChild(newItem);
 }
 
-addBook.addEventListener("click", displayBook);
+
+
+// debugging
+function displayBookLogs() {
+  myLibrary.forEach((book) => {
+    console.log(book.info());
+  });
+}
+// add o novo livro ao console.log
+addBook.addEventListener("click", displayBookLogs);
